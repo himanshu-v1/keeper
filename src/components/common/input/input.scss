@@ -1,0 +1,51 @@
+@import '../../global/styles/variables';
+
+.form {
+    &-group {
+    position: relative;
+
+    &_input {
+      height: 26px;
+      max-width: 226px;
+      width: 40vw;
+      outline: none;
+      border-radius: 5px;
+      border: 1px solid grey;
+      padding-left: 8px;
+
+      &[type="date" i] {
+        font-weight: lighter;
+        color: rgba(grey, 0.6);
+      }
+    }
+
+    &_label {
+      font-weight: lighter;
+      color: grey;
+      position: absolute;
+      top: 5px;
+      left: 8px;
+      transition: 0.15s all ease-out;
+    }
+
+    &.active {
+      .form-group_input {
+        border: 1px solid $brand-color-dark;
+      }
+
+      .form-group_label {
+        top: -10px;
+        font-size: 12px;
+        background-color: white;
+        width: auto;
+        color: $brand-color-darker;
+        font-weight: bold;
+        text-align: left;
+        padding: 0 10px;
+        border-radius: 7px 7px 0 0;
+        left: 1px;
+        transition: 0.15s all ease-out;
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+@import '../global/styles/variables';
+
+.form {
+  width: 100%;
+  height: calc(100vh - var(--header-height));
+  background: url('../../assets/images/Wallpapers-pexels-photo.jpg') no-repeat center/cover;
+
+  &-container {
+    background-color: rgba(#000, 0.6);
+    max-width: 50vw;
+    width: auto;
+    padding: $gap-10;
+    border-radius: 10px;
+  }
+
+  &-button-group {
+    width: 100%;
+    min-height: 60px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .form-button {
+      position: absolute;
+      left: 40%;
+      transition: 1s all;
+
+      &.secondary {
+        visibility: hidden;
+      }
+    }
+
+    &.dirty {
+      .form-button.primary {
+        left: 20%;
+        transition: 1s all;
+      }
+      .form-button.secondary {
+        visibility: visible;
+        left: 60%;
+        transition: 1s all;
+      }
+    }
+  }
+}

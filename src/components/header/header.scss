@@ -1,0 +1,15 @@
+@import '../global/styles/globals';
+
+.header {
+  display: flex;
+  width: 100%;
+  height: var(--header-height);
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: linear-gradient(45deg, $brand-color-lighter, $brand-color, $brand-color-lighter);
+
+  h1 {
+    margin: 0;
+  }
+}

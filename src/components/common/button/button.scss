@@ -1,0 +1,25 @@
+@use '../../global/styles/variables' as v;
+
+.form {
+    &-button {
+        width: auto;
+        height: auto;
+        min-width: 45px;
+        min-height: 45px;
+        padding: v.$gap-2 v.$gap-1-5;
+        border-radius: 50%;
+        border: none;
+        box-shadow: 2px 7px 5px black;
+
+        &.pressed {
+            box-shadow: none;
+            transform: scale(0.9);
+        }
+
+        &.primary {
+            background-color: v.$brand-color;
+            color: white;
+            z-index: 1;
+        }
+    }
+}
