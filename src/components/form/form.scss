@@ -9,7 +9,7 @@
     background-color: rgba(#000, 0.6);
     max-width: 50vw;
     width: auto;
-    padding: $gap-10;
+    padding: $gap-6 $gap-8 $gap-6 $gap-8;
     border-radius: 10px;
   }
 
@@ -24,7 +24,12 @@
     .form-button {
       position: absolute;
       left: 40%;
-      transition: 1s all;
+      transition: 0.5s all;
+
+      i {
+        transform: rotateZ(0deg);
+        transition: all 0.5s;
+      }
 
       &.secondary {
         visibility: hidden;
@@ -32,14 +37,20 @@
     }
 
     &.dirty {
+      .form-button {
+        i {
+          transform: rotateZ(360deg);
+          transition: all 0.5s;
+        }
+      }
       .form-button.primary {
         left: 20%;
-        transition: 1s all;
+        transition: 0.5s all;
       }
       .form-button.secondary {
         visibility: visible;
         left: 60%;
-        transition: 1s all;
+        transition: 0.5s all;
       }
     }
   }

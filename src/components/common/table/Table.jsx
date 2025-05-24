@@ -8,9 +8,6 @@ function Table({ data }) {
         { Header: 'Date', accessor: 'date' },
     ], []);
 
-    console.log(data);
-    console.log(columns);
-
     const {
         getTableProps,
         getTableBodyProps,

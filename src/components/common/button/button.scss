@@ -10,10 +10,12 @@
         border-radius: 50%;
         border: none;
         box-shadow: 2px 7px 5px black;
+        transition: all .1s;
 
         &.pressed {
             box-shadow: none;
             transform: scale(0.9);
+            transition: all .1s;
         }
 
         &.primary {
