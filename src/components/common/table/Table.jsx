@@ -1,5 +1,7 @@
 import { useSortBy, useTable } from "react-table";
 import { useMemo } from "react";
+import Button from "../button/Button";
+import './table.scss';
 
 function Table({ data }) {
     const columns = useMemo(() => [
@@ -29,10 +31,10 @@ function Table({ data }) {
                                 </span>
                             </th>
                         ))}
+                        <th></th>
+                        <th></th>
                     </tr>
-                )
-                )
-                }
+                ))}
             </thead>
             <tbody {...getTableBodyProps()}>
                 {rows.map(row => {
@@ -42,6 +44,16 @@ function Table({ data }) {
                             {row.cells.map(cell => {
                                 return <td {...cell.getCellProps()} key={cell.getCellProps().key}>{cell.render('Cell')}</td>
                             })}
+                            <td>
+                                <Button className="icon">
+                                    <i className="fa fa-edit"></i>
+                                </Button>
+                            </td>
+                            <td>
+                                <Button className="icon">
+                                    <i className="fa fa-trash"></i>
+                                </Button>
+                            </td>
                         </tr>
                     )
                 })}

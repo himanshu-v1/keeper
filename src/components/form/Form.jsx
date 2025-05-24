@@ -3,11 +3,13 @@ import { addExpense } from '../../store/expenseSlice';
 import Input from '../common/input/Input';
 import Button from '../common/button/Button';
 import './form.scss';
-import { useRef } from 'react';
+import { useRef, useContext } from 'react';
 import initialState from '../../store/initialState';
 import { clearForms } from '../common/utility/Utility';
+import { ToastContext } from '../global/js/ToastContext';
 
 function Form() {
+    const { addToast } = useContext(ToastContext);
     const dispatch = useDispatch();
     const buttonRef = useRef(null);
     let intermediateState = structuredClone(initialState);
@@ -33,9 +35,15 @@ function Form() {
     };
 
     const handleSubmit = () => {
+        if(!intermediateState.item && !intermediateState.amt) {
+            addToast("Please enter item and amount");
+            return;
+        }
+
         if (!intermediateState.date) {
             intermediateState.date = new Date().toISOString().split('T')[0];
         }
+        intermediateState.id = Math.floor(Math.random() * 100);
         dispatch(addExpense(intermediateState));
         console.log(intermediateState);
         intermediateState = structuredClone(initialState);

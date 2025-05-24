@@ -1,4 +1,5 @@
 const initalState = {
+    id: 0,
     item: '',
     amt: '',
     date: ''

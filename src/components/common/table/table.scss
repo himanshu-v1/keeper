@@ -1,0 +1,7 @@
+@use '../../global/styles/variables' as v;
+
+table {
+    th, td {
+        padding: v.$gap-1 v.$gap-2;
+    }
+}

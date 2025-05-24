@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import Table from '../common/table/Table';
 import './summary.css';
-import { useMemo } from 'react';
 
 function Summary() {
   const expenses = useSelector((state) => state.expense);
