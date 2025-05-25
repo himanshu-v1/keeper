@@ -1,31 +1,38 @@
 import { useDispatch } from 'react-redux';
-import { addExpense } from '../../store/expenseSlice';
+import { addExpense, editExpense } from '../../store/expenseSlice';
 import Input from '../common/input/Input';
 import Button from '../common/button/Button';
 import './form.scss';
-import { useRef, useContext } from 'react';
+import { useRef, useContext, useState, useEffect } from 'react';
 import initialState from '../../store/initialState';
 import { clearForms } from '../common/utility/Utility';
-import { ToastContext } from '../global/js/ToastContext';
+import { ToastContext, EditContext } from '../global/js/Contexts';
 
 function Form() {
     const { addToast } = useContext(ToastContext);
+    const editContext = useContext(EditContext);
     const dispatch = useDispatch();
     const buttonRef = useRef(null);
-    let intermediateState = structuredClone(initialState);
+    let intermediateData = structuredClone(initialState);
+    const [data, setData] = useState(initialState);
+    const [editMode, setEditMode] = useState(false);
+
+    useEffect(() => {
+        prepareForm(editContext.edit);
+    }, [editContext]);
 
     const handleChange = (event, input) => {
         const value = event.target.value;
         
         switch(input) {
             case 'item':
-                intermediateState.item = value;
+                intermediateData.item = value;
                 break;
             case 'amt':
-                intermediateState.amt = value;
+                intermediateData.amt = value;
                 break;
             case 'date':
-                intermediateState.date = value;
+                intermediateData.date = value;
                 value ? event.target.classList.add('touched') : event.target.classList.remove('touched');
                 break;
             default:
@@ -34,34 +41,71 @@ function Form() {
         manageButtonState();
     };
 
+    useEffect(() => {
+        updateStore();
+    }, [data]);
+
     const handleSubmit = () => {
-        if(!intermediateState.item && !intermediateState.amt) {
+        if(!intermediateData.item && !intermediateData.amt) {
             addToast("Please enter item and amount");
             return;
         }
 
-        if (!intermediateState.date) {
-            intermediateState.date = new Date().toISOString().split('T')[0];
+        if (!intermediateData.date) {
+            intermediateData.date = new Date().toISOString().split('T')[0];
         }
-        intermediateState.id = Math.floor(Math.random() * 100);
-        dispatch(addExpense(intermediateState));
-        console.log(intermediateState);
-        intermediateState = structuredClone(initialState);
+        intermediateData.id = intermediateData.id || Math.random().toString(16).slice(2);
+        setData({ ...data, ...intermediateData });
+    };
+
+    const updateStore  = () => {
+        if(!data.item && !data.amt) {
+            return;
+        }
+        if(!editMode) {
+            dispatch(addExpense(data));
+            addToast("Added!!");
+        }
+        else {
+            dispatch(editExpense(data));
+            setEditMode(false);
+            editContext.setEditData({});
+            addToast("Updated!!");
+        }
+        handleCancel();
     };
 
     const handleCancel = () => {
-        intermediateState = structuredClone(initialState);
+        setData(initialState);
         clearForms();
         manageButtonState();
     };
 
     function manageButtonState() {
-        if(intermediateState.item || intermediateState.amt || intermediateState.date) {
+        if(intermediateData.item || intermediateData.amt || intermediateData.date) {
             buttonRef.current.classList.add('dirty');
         } else {
             buttonRef.current.classList.remove('dirty');
         }
     }
+
+    const prepareForm = (data) => {
+        if(data.id) {
+            const itemEl = document.querySelector('[name="item"]');
+            const amtEl = document.querySelector('[name="amt"]');
+            const dateEl = document.querySelector('[name="date"]');
+            intermediateData = structuredClone(data);
+            console.log(intermediateData);
+            itemEl.value = data.item;
+            itemEl.focus();
+            amtEl.value = data.amt;
+            amtEl.focus();
+            dateEl.value = data.date;
+            dateEl.classList.add('touched');
+            buttonRef.current.classList.add('dirty');
+            setEditMode(true);
+        }
+    };
 
     return (
         <div className="form display-flex flex-column align-center justify-center">
@@ -70,10 +114,10 @@ function Form() {
                 <Input type="number" className="mb-3" name="amt" label="Amount" handleChange={handleChange} />
                 <Input type="date" className="mb-3" name="date" handleChange={handleChange} />
                 <div className='form-button-group' ref={buttonRef}>
-                    <Button className="primary" handleSubmit={handleSubmit}>
-                        <i className="fa-solid fa-plus"></i>
+                    <Button className="primary" handleClick={handleSubmit}>
+                        <i className={`fa-solid ${!editMode ? "fa-plus" : "fa-check"}`}></i>
                     </Button>
-                    <Button className="secondary" handleSubmit={handleCancel}>
+                    <Button className="secondary" handleClick={handleCancel}>
                         <i className="fa-solid fa-xmark"></i>
                     </Button>
                 </div>

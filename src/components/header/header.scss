@@ -1,6 +1,8 @@
 @import '../global/styles/globals';
 
 .header {
+  position: fixed;
+  z-index: 11;
   display: flex;
   width: 100%;
   height: var(--header-height);

@@ -1,6 +1,31 @@
 @use '../../global/styles/variables' as v;
 
 table {
+    min-width: 50vw;
+    width: auto;
+    border: none;
+    border-spacing: 0;
+
+    & > * {
+        border-spacing: 0px;
+    }
+    
+    thead {
+        background-color: v.$brand-color-dark;
+        color: white;
+        position: relative;
+    }
+
+    tbody {
+        tr:nth-child(odd) {
+            background-color: v.$brand-color-lighter;
+        }
+
+        tr:nth-child(even) {
+            background-color: white;
+        }
+    }
+
     th, td {
         padding: v.$gap-1 v.$gap-2;
     }
