@@ -2,9 +2,29 @@ import Header from '../header/Header';
 import Form from '../form/Form';
 import Summary from '../summary/Summary';
 import Spacer from '../../common/spacer/Spacer';
+import { useDispatch } from 'react-redux';
+import { setState } from '../../store/expenseSlice';
+import { getInitialState } from '../../global/API/actions';
 import './landing.scss';
+import { useEffect } from 'react';
 
 function Landing() {
+    const dispatch = useDispatch();
+
+    const setInitialState = async () => {
+        try {
+            const data = await getInitialState();
+            dispatch(setState(data));
+            console.log('initial state', data);
+        } catch (error) {
+            console.error(error.message);
+        }
+    };
+
+    useEffect(() => {
+        setInitialState();
+    });
+
     return (
         <div className="landing">
             <Header />
