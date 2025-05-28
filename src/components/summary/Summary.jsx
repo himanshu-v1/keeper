@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import Table from '../common/table/Table';
+import Table from '../../common/table/Table';
 import { removeExpense } from '../../store/expenseSlice';
 import { useContext } from 'react';
-import { EditContext } from '../global/js/Contexts';
+import { EditContext } from '../../global/js/Contexts';
 import './summary.css';
 
 function Summary() {
@@ -12,7 +12,7 @@ function Summary() {
 
   const handleEdit = (id) => {
     const expense = expenses.find(i => i.id === id);
-    editContext.setEditData(expense);
+    editContext.addEditData(expense);
   }
 
   const handleDelete = (id) => {

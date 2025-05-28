@@ -1,25 +1,25 @@
 import { useDispatch } from 'react-redux';
 import { addExpense, editExpense } from '../../store/expenseSlice';
-import Input from '../common/input/Input';
-import Button from '../common/button/Button';
-import './form.scss';
+import Input from '../../common/input/Input';
+import Button from '../../common/button/Button';
 import { useRef, useContext, useState, useEffect } from 'react';
 import initialState from '../../store/initialState';
-import { clearForms } from '../common/utility/Utility';
-import { ToastContext, EditContext } from '../global/js/Contexts';
+import { clearForms } from '../../common/utility/Utility';
+import { ToastContext, EditContext } from '../../global/js/Contexts';
+import './form.scss';
 
 function Form() {
     const { addToast } = useContext(ToastContext);
     const editContext = useContext(EditContext);
     const dispatch = useDispatch();
     const buttonRef = useRef(null);
-    let intermediateData = structuredClone(initialState);
+    let intermediateData = structuredClone(editContext.editData || initialState);
     const [data, setData] = useState(initialState);
     const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
-        prepareForm(editContext.edit);
-    }, [editContext]);
+        prepareForm(editContext.editData);
+    }, [editContext.editData]);
 
     const handleChange = (event, input) => {
         const value = event.target.value;
@@ -69,7 +69,7 @@ function Form() {
         else {
             dispatch(editExpense(data));
             setEditMode(false);
-            editContext.setEditData({});
+            editContext.addEditData({});
             addToast("Updated!!");
         }
         handleCancel();
@@ -77,6 +77,8 @@ function Form() {
 
     const handleCancel = () => {
         setData(initialState);
+        editMode && setEditMode(false);
+        editContext.addEditData({});
         clearForms();
         manageButtonState();
     };
@@ -91,19 +93,19 @@ function Form() {
 
     const prepareForm = (data) => {
         if(data.id) {
+            setEditMode(true);
             const itemEl = document.querySelector('[name="item"]');
             const amtEl = document.querySelector('[name="amt"]');
             const dateEl = document.querySelector('[name="date"]');
             intermediateData = structuredClone(data);
             console.log(intermediateData);
-            itemEl.value = data.item;
+            itemEl.value = intermediateData.item;
             itemEl.focus();
-            amtEl.value = data.amt;
+            amtEl.value = intermediateData.amt;
             amtEl.focus();
-            dateEl.value = data.date;
+            dateEl.value = intermediateData.date;
             dateEl.classList.add('touched');
             buttonRef.current.classList.add('dirty');
-            setEditMode(true);
         }
     };
 
