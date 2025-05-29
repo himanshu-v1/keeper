@@ -3,7 +3,7 @@
 .form {
   width: 100vw;
   height: calc(100vh - var(--header-height));
-  background: url('../../assets/images/Wallpapers-pexels-photo.jpg') no-repeat center/cover;
+  @include backdrop('../../assets/images/Wallpapers-pexels-photo.jpg');
 
   &-container {
     background-color: rgba(#000, 0.6);

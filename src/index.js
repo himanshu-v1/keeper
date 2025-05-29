@@ -10,7 +10,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
   {
-    process.env.NODE_ENV === "development" ? (
+    process.env.NODE_ENV === "dev" ? (
       <React.StrictMode>
         <Provider store={store}>
           <App />

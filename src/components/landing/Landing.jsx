@@ -4,9 +4,9 @@ import Summary from '../summary/Summary';
 import Spacer from '../../common/spacer/Spacer';
 import { useDispatch } from 'react-redux';
 import { setState } from '../../store/expenseSlice';
-import { getInitialState } from '../../global/API/actions';
-import './landing.scss';
+import { getInitialState } from '../../services/backendService';
 import { useEffect } from 'react';
+import './landing.scss';
 
 function Landing() {
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ function Landing() {
 
     useEffect(() => {
         setInitialState();
-    });
+    }, []);
 
     return (
         <div className="landing">

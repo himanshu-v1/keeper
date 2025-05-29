@@ -1,22 +1,42 @@
 @use '../../global/styles/variables' as v;
 
 table {
-    min-width: 50vw;
-    width: auto;
+    position: relative;
+    max-width: 50vw;
+    width: 100%;
     border: none;
     border-spacing: 0;
+    max-height: 50vh;
+    display: block;
+    overflow: auto;
+
+    -ms-overflow-style: none;   // IE and Edge
+    scrollbar-width: none;      // Firefox
+    // Hide scrollbar for Webkit browsers (Chrome, Safari)
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    
 
     & > * {
         border-spacing: 0px;
+    }
+
+    thead, tbody {
+        // display: block;
+        width: 100%;
     }
     
     thead {
         background-color: v.$brand-color-dark;
         color: white;
-        position: relative;
+        position: sticky;
+        top: 0;
+        z-index: 1;
     }
 
     tbody {
+        position: inherit;
         tr:nth-child(odd) {
             background-color: v.$brand-color-lighter;
         }
@@ -28,5 +48,9 @@ table {
 
     th, td {
         padding: v.$gap-1 v.$gap-2;
+    }
+    
+    tr, th, td {
+        width: 26%;
     }
 }

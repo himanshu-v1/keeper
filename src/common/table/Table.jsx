@@ -55,7 +55,7 @@ function Table({ data, buttons }) {
                                 buttons && buttons.length &&
                                 buttons.map((btn) => (
                                     <td>
-                                        <Button className={`${btn.type}`} handleClick={() => btn.handleClick(row.original.id)}>
+                                        <Button className={`${btn.type}`} handleClick={() => btn.handleClick(row.original._id)}>
                                             <i className={`fa fa-${btn.action}`}></i>
                                         </Button>
                                     </td>

@@ -6,6 +6,7 @@ import { useRef, useContext, useState, useEffect } from 'react';
 import initialState from '../../store/initialState';
 import { clearForms } from '../../common/utility/Utility';
 import { ToastContext, EditContext } from '../../global/js/Contexts';
+import { addData, editData } from '../../services/backendService';
 import './form.scss';
 
 function Form() {
@@ -54,32 +55,45 @@ function Form() {
         if (!intermediateData.date) {
             intermediateData.date = new Date().toISOString().split('T')[0];
         }
-        intermediateData.id = intermediateData.id || Math.random().toString(16).slice(2);
+        // intermediateData.id = intermediateData.id || Math.random().toString(16).slice(2);
         setData({ ...data, ...intermediateData });
     };
 
-    const updateStore  = () => {
+    const updateStore  = async () => {
         if(!data.item && !data.amt) {
             return;
         }
         if(!editMode) {
-            dispatch(addExpense(data));
-            addToast("Added!!");
+            const res = await addData(data);
+            if(res) {
+                setData({...data, _id: res._id});
+                dispatch(addExpense(data));
+                addToast("Added!!");
+                handleCancel();
+            } else {
+                addToast("Failed to add data!!");
+            }
         }
         else {
-            dispatch(editExpense(data));
-            setEditMode(false);
-            editContext.addEditData({});
-            addToast("Updated!!");
+            const res = await editData(data);
+            if(res) {
+                dispatch(editExpense(data));
+                addToast("Updated!!");
+                setEditMode(false);
+                editContext.addEditData({});
+                handleCancel();
+            } else {
+                addToast("Failed to update data!!");
+            }
         }
-        handleCancel();
     };
 
     const handleCancel = () => {
+        intermediateData = structuredClone(initialState);
         setData(initialState);
+        clearForms();
         editMode && setEditMode(false);
         editContext.addEditData({});
-        clearForms();
         manageButtonState();
     };
 
@@ -92,7 +106,7 @@ function Form() {
     }
 
     const prepareForm = (data) => {
-        if(data.id) {
+        if(data._id) {
             setEditMode(true);
             const itemEl = document.querySelector('[name="item"]');
             const amtEl = document.querySelector('[name="amt"]');

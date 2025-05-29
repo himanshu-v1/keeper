@@ -19,6 +19,18 @@ function App() {
     document.querySelector('.form').scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
   };
 
+  // document.addEventListener("visibilitychange", () => {
+  //   if (document.hidden) {
+  //     console.log('unload');
+  //   }
+  // });
+
+  // window.onbeforeunload = (e) => {
+  //   console.log('reload');
+  //   e.preventDefault(); // Standard syntax
+  //   e.returnValue = ''; // Legacy syntax 
+  // }
+
   return (
     <ToastContext.Provider value={{ toast, addToast }}>
       <EditContext.Provider value={{ editData, addEditData }}>

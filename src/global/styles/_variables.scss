@@ -27,3 +27,9 @@ $brand-color-lighter: #ccddff;
 $brand-color-light: lighten($brand-color, 20%);
 $brand-color-dark: darken($brand-color, 20%);
 $brand-color-darker: darken($brand-color, 40%);
+
+@mixin backdrop($url) {
+    background: url($url) no-repeat center/cover;
+    background-color: rgba(black, 0.4);
+    background-blend-mode: darken;
+}

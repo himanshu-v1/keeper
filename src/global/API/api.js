@@ -1,13 +1,8 @@
-async function getAllData() {
-    const url = `${process.env.REACT_APP_HOST}/alldata`;
-    console.log(url);
-    const response = await fetch(url, { signal: AbortSignal.timeout(1000 * 5) });
-    const data = await response.json();
-    return data;
-}
+const url = process.env.REACT_APP_HOST;
 
-async function getDataById(id) {
-    const response = await fetch(`/data/${id}`);
+async function getAllData() {
+    console.log(url);
+    const response = await fetch(`${url}/alldata`, { signal: AbortSignal.timeout(1000 * 5) });
     const data = await response.json();
     return data;
 }
@@ -24,13 +19,13 @@ async function getData(params) {
             }
         }
     });
-    const response = await fetch(`/data?${queryParams.join('&')}`);
+    const response = await fetch(`${url}/data?${queryParams.join('&')}`);
     const data = await response.json();
     return data;
 }
 
 async function addNewData(data) {
-    const response = await fetch('/data', {
+    const response = await fetch(`${url}/data`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -39,14 +34,14 @@ async function addNewData(data) {
 }
 
 async function deleteData(id) {
-    const response = await fetch(`/data/${id}`, {
+    const response = await fetch(`${url}/delete/${id}`, {
         method: 'DELETE'
     });
     return response;
 }
 
 async function updateData(id, data) {
-    const response = await fetch(`/data/${id}`, {
+    const response = await fetch(`${url}/update/${id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -54,4 +49,4 @@ async function updateData(id, data) {
     return response;
 }
 
-export { getAllData, getDataById, getData, addNewData, deleteData, updateData };
+export { getAllData, getData, addNewData, deleteData, updateData };
