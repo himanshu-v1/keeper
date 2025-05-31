@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { setState } from '../../store/expenseSlice';
 import { getInitialState } from '../../services/backendService';
 import { useEffect } from 'react';
+import setTestData from '../../test/data';
 import './landing.scss';
 
 function Landing() {
@@ -22,13 +23,17 @@ function Landing() {
     };
 
     useEffect(() => {
-        setInitialState();
+        if(process.env.REACT_APP_ENV === 'test') {
+            setTestData(dispatch, setState);
+        } else {
+            setInitialState();
+        }
     }, []);
 
     return (
         <div className="landing">
             <Header />
-            <Spacer />
+            {/* <Spacer /> */}
             <Form />
             <Summary />
         </div>
