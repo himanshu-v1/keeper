@@ -1,8 +1,7 @@
 @import '../../global/styles/variables';
 
 .form {
-  width: 100vw;
-  height: calc(100vh - var(--header-height));
+  // height: calc(100vh - var(--header-height));
   @include backdrop('../../assets/images/Wallpapers-pexels-photo.jpg');
 
   &-container {
