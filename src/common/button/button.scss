@@ -1,7 +1,7 @@
 @use '../../global/styles/variables' as v;
 
-.form {
-    &-button {
+// .form {
+    button {
         &:not(.icon) {
             width: auto;
             height: auto;
@@ -30,5 +30,18 @@
             border: none;
             background: none;
         }
+
+        &.login-btn {
+            background-color: v.$brand-color-dark;
+            box-shadow: none;
+            color: white;
+            border-radius: 5px;
+            padding: v.$gap-1;
+            min-height: 35px;
+            min-width: 65px;
+            width: auto;
+            margin-left: auto;
+            margin-top: 5%;
+        }
     }
-}
+// }

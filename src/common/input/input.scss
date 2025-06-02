@@ -1,21 +1,38 @@
 @use '../../global/styles/variables' as v;
 
+@mixin input($color) {
+  height: 35px;
+  border-radius: 5px;
+  padding-left: v.$gap-1;
+  outline: none;
+  border: 1px solid $color;
+
+  /* Chrome, Safari, Edge, Opera */
+  &[type="number"]::-webkit-outer-spin-button,
+  &[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  &[type=number] {
+    -moz-appearance: textfield;
+  }
+}
+
 .form {
-    &-group {
+  &-group {
     position: relative;
 
-    &_input {
-      height: 35px;
+    & > &_input {
+      @include input(grey);
       max-width: 226px;
       width: 40vw;
-      outline: none;
-      border-radius: 5px;
-      border: 1px solid grey;
-      padding-left: v.$gap-1;
 
       &[type="date" i] {
         font-weight: lighter;
-        color: rgba(grey, 0.6);
+        // color: rgba(grey, 0.6);
+        color: grey;
 
         &.touched {
           color: inherit;
@@ -23,7 +40,7 @@
       }
     }
 
-    &_label {
+    & > &_label {
       font-weight: lighter;
       color: grey;
       position: absolute;
@@ -49,6 +66,29 @@
         border-radius: 7px 7px 0 0;
         left: 1px;
         transition: 0.15s all ease-out;
+      }
+    }
+  }
+
+  &-group-plain {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: v.$gap-1;
+
+    &, & > * {
+      width: inherit;
+    }
+
+    span {
+      text-align: left;
+    }
+
+    input {
+      @include input(black);
+
+      &:focus {
+        border: 1px solid v.$brand-color-dark;
       }
     }
   }

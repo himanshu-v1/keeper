@@ -1,0 +1,181 @@
+@import '../../global/styles/variables';
+@import '../../global/styles/globals';
+
+@mixin errorGroup {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: $gap-1;
+}
+
+#phone-info {
+    z-index: 9;
+}
+
+.login {
+    @include backdrop('../../assets/images/219691.jpg');
+    padding: $gap-8;
+    justify-content: flex-end;
+
+    @include mobile {
+        justify-content: center;
+        padding: $gap-4;
+    }
+    @include extra-large-screen {
+        padding: $gap-4 $gap-11;
+    }
+
+    &-container {
+        min-width: 40vw;
+        min-height: 65vh;
+        height: 100%;
+        width: auto;
+        display: grid;
+        grid-template-areas: 'info' 'form';
+        grid-template-rows: 1fr 15fr;
+
+        @include mobile {
+            max-width: 60vw;
+        }
+
+        @include extra-large-screen {
+            min-width: 30vw;
+        }
+
+        &-info {
+            grid-area: info;
+            width: 100%;
+            // height: 42px;
+            color: white;
+            background-color: $brand-color-dark;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: $gap-1;
+            padding: 0 $gap-2;
+            font-size: small;
+            font-weight: 300;
+            border-radius: 10px 10px 0px 0px;
+            text-align: left;
+        }
+
+        &-form {
+            grid-area: form;
+            background-color: white;
+            border-radius: 0px 0px 10px 10px;
+            padding: $gap-3 $gap-6;
+            overflow-y: scroll;
+            overflow-x: hidden;
+
+            @include mobile {
+                padding: $gap-3 $gap-3;
+            }
+
+            h2, h4 {
+                text-align: left;
+                margin: 0 0 $gap-4 0;
+
+                span {
+                    color: $brand-color;
+                    font-style: italic;
+                }
+            }
+
+            h4 {
+                font-weight: 500;
+                max-width: 260px;
+                word-break: auto-phrase;
+                font-size: small;
+            }
+
+            .login-form {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: center;
+                width: 100%;
+                gap: $gap-2;
+
+                .login-input-group {
+                    width: inherit;
+                    display: flex;
+                    flex-direction: column;
+                    gap: $gap-2;
+
+                    .tooltip-icon {
+                        height: 0;
+                        i {
+                            position: relative;
+                            right: -44%;
+                            top: 16px;
+                        }
+                    }
+
+                    .number-validation, .pwd-validation {
+                        i.fa-xmark {
+                            color: red;
+                        }
+                        i.fa-check {
+                            color: green;
+                        }
+    
+                        span {
+                            font-size: x-small;
+                        }
+                    }
+    
+                    .pwd-validation {
+                        .required {
+                            display: none;
+                            &.show {
+                                display: block;
+                            }
+                        }
+    
+                        .format {
+                            display: none;
+                            text-align: left;
+                            flex-direction: column;
+                            gap: $gap-0-5;
+    
+                            &.show {
+                                display: flex;
+                            }
+                        }
+    
+                        .min-length, .uppercase, .lowercase, .numbers, .special-characters {
+                            @include errorGroup;
+    
+                            i.fa-xmark {
+                                display: block;
+                            }
+                            i.fa-check {
+                                display: none;
+                            }
+    
+                            &.valid {
+                                i.fa-xmark {
+                                    display: none;
+                                }
+                                i.fa-check {
+                                    display: block;
+                                }
+                            }
+                        }
+                    }
+    
+                    .number-validation {
+                        @include errorGroup;
+                        display: none;
+    
+                        &.show {
+                            display: flex;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+}
