@@ -1,7 +1,7 @@
 import { ToastContext, EditContext } from './global/js/Contexts';
 import { useState } from 'react';
-import Landing from './components/landing/Landing';
 import Toast from './common/toast/Toast';
+import Routing from './router/router';
 import './App.scss';
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
     <ToastContext.Provider value={{ toast, addToast }}>
       <EditContext.Provider value={{ editData, addEditData }}>
         <div className="App">
-          <Landing />
+          <Routing />
           <Toast toast={toast} />
         </div>
       </EditContext.Provider>
