@@ -54,6 +54,12 @@ $extra-large-screen-breakpoint: 1920px;
     }
 }
 
+@mixin except-mobile {
+    @media screen and (min-width: $mobile-breakpoint) {
+        @content;
+    }
+}
+
 @mixin tablet {
     @media screen and (min-width: $mobile-breakpoint) and (max-width: $tablet-breakpoint) {
         @content;

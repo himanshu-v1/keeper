@@ -5,6 +5,8 @@ import Button from "../../common/button/Button";
 import { Tooltip } from "react-tooltip";
 import { auth } from "../../global/API/api";
 import { ToastContext } from "../../global/js/Contexts";
+import image from "../../assets/images/white.svg";
+import imageColor from "../../assets/images/Logo.svg";
 import "./login.scss";
 
 function Login() {
@@ -16,8 +18,14 @@ function Login() {
     const [isFirst, setIsFirst] = useState(false);
     const navigate = useNavigate();
     const disclaimer = "The password you enter here will be used for all future logins. Please remember it!";
-    const phoneTooltipContent = `Please enter your registered mobile number again again.<br/>
-    Again.`;
+    const phoneTooltipContent = `<ul style="text-align:left;"><li>Atleast 10 digits</li><li>Must be a valid Number</li></ul>`;
+    const pwdTooltipContent = `<ul style="text-align:left;">
+        <li>Minimum Length: 8 Characters</li>
+        <li>One Uppercase Letter</li>
+        <li>One Lowercase Letter</li>
+        <li>One Special Character</li>
+        <li>One Number</li>
+        </ul>`;
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -145,12 +153,24 @@ function Login() {
     return (
         <div className="login display-flex align-center">
             {/* <Link to="/landing">Login</Link> */}
+            <div className="login-logo">
+                <div className="logo-image">
+                    <img src={image} alt="Expense Keeper" />
+                    <div className="logo-text">
+                        <span>Expense</span><span>Keeper</span>
+                    </div>
+                </div>
+                <div className="text">Create an account or login</div>
+            </div>
             <div className="login-container">
                 <div className="login-container-info">
                     <i className="fa-solid fa-circle-info"></i>
                     <p>Please sign in to get exclusive data!</p>
                 </div>
                 <div className="login-container-form">
+                    <div className="login-logo-mobile">
+                        <img src={imageColor} alt="Expense Keeper" />
+                    </div>
                     <h2>Sign in</h2>
                     <h4>First time user? 
                         <span data-tooltip-id="login-disclaimer" data-tooltip-content={disclaimer}>Remeber this password!</span>
@@ -174,7 +194,7 @@ function Login() {
 
                         <div className="login-input-group">
                             <span className="tooltip-icon">
-                                <i data-tooltip-id="phone-info" data-tooltip-content={"abcd"} className="fa-solid fa-circle-info"></i>
+                                <i data-tooltip-id="phone-info" data-tooltip-html={pwdTooltipContent} className="fa-solid fa-circle-info"></i>
                                 <Tooltip id="phone-info" place="left" />
                             </span>
                             <Input type="password" name="cred" variant="plain" label="Password"
